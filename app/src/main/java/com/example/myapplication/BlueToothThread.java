@@ -3,7 +3,12 @@ package com.example.myapplication;
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -18,14 +23,15 @@ import java.util.UUID;
 
 public class BlueToothThread extends Thread {
 
+    private Context handler;
     private BluetoothDevice bluetoothDevice;
     private BluetoothSocket bluetoothSocket;
     private   InputStream mmInStream;
     private   OutputStream mmOutStream;
 
-    public BlueToothThread(BluetoothDevice bluetoothDevice ) {
+    public BlueToothThread(BluetoothDevice bluetoothDevice, Context handler) {
         this.bluetoothDevice = bluetoothDevice;
-
+        this.handler=handler;
     }
 
     @SuppressLint("MissingPermission")
@@ -44,6 +50,9 @@ public class BlueToothThread extends Thread {
             bluetoothSocket = (BluetoothSocket) m.invoke(bluetoothSocket.getRemoteDevice(), params);
             bluetoothSocket.connect();
 
+            Looper.prepare();
+            Toast.makeText( handler,"hahaha", Toast.LENGTH_LONG).show();
+            Looper.loop();
 
             InputStream inputStream=   bluetoothSocket.getInputStream();
 

@@ -94,7 +94,7 @@ public class Bluetooth extends AppCompatActivity {
                             bluetoothAdapter.cancelDiscovery();
                         }
 
-                         blueToothThread[0] = new BlueToothThread(bluetoothDevice);
+                         blueToothThread[0] = new BlueToothThread(bluetoothDevice,Bluetooth.this);
 
                         blueToothThread[0].start();
 
